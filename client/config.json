@@ -1,65 +1,48 @@
 {
     "stats": {},
     "api": {
+        "tag": "api",
         "services": [
-            "HandlerService",
-            "LoggerService",
             "StatsService"
-        ],
-        "tag": "api"
+        ]
     },
     "policy": {
         "levels": {
             "0": {
-                "connIdle": 300,
-                "downlinkOnly": 30,
-                "handshake": 4,
-                "uplinkOnly": 5,
-                "statsUserDownlink": true,
-                "statsUserUplink": true
+                "statsUserUplink": true,
+                "statsUserDownlink": true
             }
-        }
-    },
-    "log": {
-        "access": "/var/log/v2ray/access.log",
-        "error": "/var/log/v2ray/error.log",
-        "loglevel": "warning"
-    },
-    "inbound": {
-        "port": 9000,
-        "protocol": "vmess",
-        "streamSettings": {
-            "network": "kcp",
-            "security": "",
-            "tlsSettings": {},
-            "tcpSettings": null,
-            "kcpSettings": {
-                "mtu": 1350,
-                "tti": 50,
-                "uplinkCapacity": 100,
-                "downlinkCapacity": 100,
-                "congestion": false,
-                "readBufferSize": 2,
-                "writeBufferSize": 2,
-                "header": {
-                    "type": "wechat-video",
-                    "request": null,
-                    "response": null
-                }
-            },
-            "wsSettings": null
         },
-        "settings": {
-            "clients": [
-                {
-                    "id": "e853546d-b3d2-4468-a4b5-d536ab2438fa",
-                    "alterId": 64,
-                    "level": 0
-                }
-            ]
+        "system": {
+            "statsInboundUplink": true,
+            "statsInboundDownlink": true
         }
     },
-    "inboundDetour": [
+    "inbounds": [
+        {
+            "tag": "tcp",
+            "port": 443,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "email": "auser",
+                        "id": "e731f153-4f31-49d3-9e8f-ff8f396135ef",
+                        "level": 0,
+                        "alterId": 64
+                    },
+                    {
+                        "email": "buser",
+                        "id": "e731f153-4f31-49d3-9e8f-ff8f396135ee",
+                        "level": 0,
+                        "alterId": 64
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network":"ws"
+            }
+        },
         {
             "listen": "127.0.0.1",
             "port": 10085,
@@ -70,46 +53,24 @@
             "tag": "api"
         }
     ],
-    "outbound": {
-        "protocol": "freedom",
-        "settings": {}
-    },
-    "outboundDetour": [
+    "outbounds": [
         {
-            "protocol": "blackhole",
-            "settings": {},
-            "tag": "blocked"
+            "protocol": "freedom",
+            "settings": {}
         }
     ],
     "routing": {
-        "strategy": "rules",
         "settings": {
             "rules": [
                 {
-                    "type": "field",
-                    "ip": [
-                        "0.0.0.0/8",
-                        "10.0.0.0/8",
-                        "100.64.0.0/10",
-                        "127.0.0.0/8",
-                        "169.254.0.0/16",
-                        "172.16.0.0/12",
-                        "192.0.0.0/24",
-                        "192.0.2.0/24",
-                        "192.168.0.0/16",
-                        "198.18.0.0/15",
-                        "198.51.100.0/24",
-                        "203.0.113.0/24",
-                        "::1/128",
-                        "fc00::/7",
-                        "fe80::/10"
-                    ],
                     "inboundTag": [
                         "api"
                     ],
-                    "outboundTag": "api"
+                    "outboundTag": "api",
+                    "type": "field"
                 }
             ]
-        }
+        },
+        "strategy": "rules"
     }
 }
