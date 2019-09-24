@@ -21,7 +21,7 @@
     "inbounds": [
         {
             "tag": "tcp",
-            "port": 443,
+            "port": 8081,
             "protocol": "vmess",
             "settings": {
                 "clients": [
