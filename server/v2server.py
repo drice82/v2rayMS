@@ -151,21 +151,21 @@ class sqlconn(object):
 
     # 判断用户流量是否超标
     def traffic_check(self, all_user):
-        sql_exec = "SELECT uplink, downlink, transfer_enable, sid FROM user"
+        sql_exec = "SELECT u, d, transfer_enable, sid FROM user"
         tmp = self.execute_sql(sql_exec)
         for i in tmp:
-            if i['uplink'] + i['downlink'] > i['transfer_enable']:
+            if i['u'] + i['d'] > i['transfer_enable']:
                 for n in all_user:
                     if n['sid'] == i['sid']:
                         n['enable'] = 0
 
     # 更新流量到数据库
     def update_traffic(self, traffic_data):
-        d_tra_sql = 'UPDATE user SET downlink=downlink+' + str(
+        d_tra_sql = 'UPDATE user SET d=d+' + str(
             traffic_data[1]) + ' WHERE sid=' + str(traffic_data[0])
-        u_tra_sql = 'UPDATE user SET uplink=uplink+' + str(
+        u_tra_sql = 'UPDATE user SET u=u+' + str(
             traffic_data[2]) + ' WHERE sid=' + str(traffic_data[0])
-        use_time_sql = 'UPDATE user SET usetime=' + str(
+        use_time_sql = 'UPDATE user SET t=' + str(
             traffic_data[3]) + ' WHERE sid=' + str(traffic_data[0])
         self.execute_sql(d_tra_sql)
         self.execute_sql(u_tra_sql)
