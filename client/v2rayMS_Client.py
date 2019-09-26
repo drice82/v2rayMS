@@ -81,8 +81,8 @@ def sql_cov_json(userlist, user_os=None):
         for user in userlist:
             if user[1] == 1:
                 usrname_cfg = {}
-                usrname_cfg['id'] = user[0]
-                usrname_cfg['email'] = str(user[2]) + '@' + DOMAIN
+                usrname_cfg['id'] = user[2]
+                usrname_cfg['email'] = str(user[0]) + '@' + DOMAIN
                 usrname_cfg['alterId'] = ALTERID
                 usrname_cfg['level'] = LEVEL
                 User_list.append(usrname_cfg)
